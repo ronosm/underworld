@@ -67,6 +67,11 @@ class Member
     private $status;
 
     /**
+     * @ManyToMany(targetEntity="Member", mappedBy="members")
+     **/
+    private $groups;
+
+    /**
      * Get id
      *
      * @return integer

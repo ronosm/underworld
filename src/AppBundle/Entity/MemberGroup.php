@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +27,18 @@ class MemberGroup
      */
     private $created;
 
+    /**
+     * @ManyToMany(targetEntity="Member", inversedBy="groups")
+     * @JoinTable(name="members_groups")
+     **/
+    private $members;
+
+    /**
+     *
+     */
+    public function __construct() {
+        $this->groups = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -83,6 +96,22 @@ class MemberGroup
     public function getCreated()
     {
         return $this->created;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMembers()
+    {
+        return $this->members;
+    }
+
+    /**
+     * @param mixed $members
+     */
+    public function setMembers($members)
+    {
+        $this->members = $members;
     }
 }
 
