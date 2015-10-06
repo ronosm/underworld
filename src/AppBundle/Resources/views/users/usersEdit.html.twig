@@ -1,0 +1,14 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block title %}RIVAS RUIDO APP{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <h1>RIVAS RUIDO APP - NUEVO USUARIO</h1>
+        <div id="container">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -2,74 +2,129 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Member
  * @ORM\entity
  * @ORM\Table(name="member")
  */
-class Member
+class Member implements UserInterface, \Serializable
 {
     /**
      * @var integer
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private $name;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private $surname1;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private $surname2;
 
     /**
      * @var \DateTime
+     * @ORM\Column(type="date")
      */
     private $birth;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private $dni;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private $address;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private $phone;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
-    private $email;
+    private $username;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=124)
+     */
+    private $password;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $rol;
 
     /**
      * @var \DateTime
+     * @ORM\Column(type="date")
      */
     private $created;
 
     /**
      * @var boolean
+     * @ORM\Column(type="boolean")
      */
     private $status;
 
     /**
-     * @ManyToMany(targetEntity="Member", mappedBy="members")
+     * @ORM\ManyToMany(targetEntity="MemberGroup", inversedBy="members")
+     * @ORM\JoinTable(name="members_groups")
      **/
     private $groups;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Task", inversedBy="members")
+     * @ORM\JoinTable(name="member_task")
+     **/
+    private $tasks;
+
+    /**
+     * Member constructor.
+     */
+    public function __construct()
+    {
+        $this->tasks = new ArrayCollection();
+        $this->groups = new ArrayCollection();
+    }
+
+    static public function getRolOptions()
+    {
+        return [
+            'ROL_ADMIN'   => 'Presidente',
+            'ROL_VICE'    => 'Vicepresidente',
+            'ROLE_TREAS'  => 'Tesorero',
+            'ROLE_SECR'   => 'Secretario',
+            'ROLE_VOCAL'  => 'Vocal',
+            'ROLE_MEMBER' => 'Miembro',
+        ];
+    }
 
     /**
      * Get id
@@ -226,27 +281,162 @@ class Member
     }
 
     /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    /**
      * @return boolean
      */
     public function isStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * @param mixed $groups
+     */
+    public function setGroups($groups)
+    {
+        $this->groups = $groups;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
+    }
+
+    /**
+     * @param mixed $tasks
+     */
+    public function setTasks($tasks)
+    {
+        $this->tasks = $tasks;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param string $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * @return string
+     *
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @param $rol
+     * @return string
+     */
+    public function setRol($rol)
+    {
+        return $this->rol = $rol;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        return [$this->rol];
+    }
+
+    /**
+     * @return string
+     */
+    public function getRol()
+    {
+        return $this->rol;
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusName()
+    {
+        return $this->status ? 'Activo' : 'Inactivo';
+    }
+
+    /**
+     * @param bool $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return null
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     *
+     */
+    public function eraseCredentials()
+    {
     }
 }
 

@@ -13,33 +13,47 @@ class Payment
 {
     /**
      * @var integer
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @var \DateTime
+     * @ORM\Column(type="date")
      */
     private $created;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private $description;
 
     /**
      * @var float
+     * @ORM\Column(type="decimal", scale=2)
      */
     private $amount;
 
     /**
      * @var boolean
+     * @ORM\Column(type="boolean")
      */
     private $approved;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="MemberGroup")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     **/
+    private $group;
 
     /**
      * Get id
      *
      * @return integer
+     * @ORM\Column(type="integer")
      */
     public function getId()
     {
@@ -116,6 +130,22 @@ class Payment
     public function setApproved($approved)
     {
         $this->approved = $approved;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param mixed $group
+     */
+    public function setGroup($group)
+    {
+        $this->group = $group;
     }
 }
 

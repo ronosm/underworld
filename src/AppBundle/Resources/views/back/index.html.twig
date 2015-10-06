@@ -1,0 +1,87 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block title %}RIVAS RUIDO APP MEMBER ADMIN{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <h1>RIVAS RUIDO APP MEMBER ADMIN</h1>
+        <div id="container">
+            <h2>Mi información</h2>
+            <div>Hola {{ app.user.name }}</div>
+            <div>Nombre: {{ app.user.name }}</div>
+            <div>Apellidos: {{ app.user.surname1 }} {{ app.user.surname2 }}</div>
+            <div>Email: {{ app.user.username }}</div>
+            {% for band in app.user.groups %}
+            <div class="level1">
+                <div>{{ band.name }}</div>
+                <div>Miembros</div>
+                <ul>
+                    <li></li>
+                </ul>
+                <div>Próximos ensayos</div>
+                <ul>
+                    <li></li>
+                </ul>
+                <div>Pagos pendientes</div>
+                <ul>
+                    <li></li>
+                </ul>
+                <div>Tareas pendientes y eventos</div>
+                <ul>
+                    <li></li>
+                </ul>
+                <div>Sanciones</div>
+                <ul>
+                    <li></li>
+                </ul>
+                <div>Gestionar horas</div>
+                <div>Tareas</div>
+                <div>Pagos</div>
+                <div>Sanciones</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if is_granted("ROLE_ADMIN") %}
+        <div id="container">
+            <h2>ADMINISTRACIÓN</h2>
+            <div><a href="{{ url("users_list") }}">Usuarios</a></div>
+            <div>Bandas</div>
+            <div>Pagos</div>
+            <div>Horas</div>
+            <div>Sanciones</div>
+            <div>Tareas</div>
+            <div>Eventos</div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
+    h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
+    h1 { font-size: 36px; }
+    h2 { font-size: 21px; margin-bottom: 1em; }
+    p { margin: 0 0 1em 0; }
+    a { color: #0000F0; }
+    a:hover { text-decoration: none; }
+    code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
+    #wrapper { background: #FFF; margin: 1em auto; max-width: 800px; width: 95%; }
+    #container { padding: 2em; }
+    #welcome, #status { margin-bottom: 2em; }
+    #welcome h1 span { display: block; font-size: 75%; }
+    #icon-status, #icon-book { float: left; height: 64px; margin-right: 1em; margin-top: -4px; width: 64px; }
+    #icon-book { display: none; }
+
+    @media (min-width: 768px) {
+        #wrapper { width: 80%; margin: 2em auto; }
+        #icon-book { display: inline-block; }
+        #status a, #next a { display: block; }
+
+        @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+        @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+        .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
+    }
+</style>
+{% endblock %}

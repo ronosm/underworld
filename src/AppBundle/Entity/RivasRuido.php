@@ -7,42 +7,52 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * RivasRuido
  * @ORM\entity
- * @ORM\Table(name="practice")
+ * @ORM\Table(name="rivas_ruido")
  */
 class RivasRuido
 {
     /**
      * @var integer
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @var boolean
+     * @ORM\Column(type="boolean")
      */
     private $status;
 
     /**
      * @var boolean
+     * @ORM\Column(type="boolean")
      */
     private $statusRoom1;
 
     /**
      * @var boolean
+     * @ORM\Column(type="boolean")
      */
     private $statusRoom2;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private $equipmentRoom1;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
+     * @ORM\Column(type="string")
      */
     private $equipmentRoom2;
 
     /**
      * @var float
+     * @ORM\Column(type="decimal", scale=2)
      */
     private $wealth;
 
@@ -71,6 +81,24 @@ class RivasRuido
     private $treasurer;
 
     /**
+     * @ORM\OneToOne(targetEntity="Member")
+     * @ORM\JoinColumn(name="secretary_id", referencedColumnName="id")
+     **/
+    private $secretary;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $about;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $sanctionPolicy;
+
+    /**
      * Get id
      *
      * @return integer
@@ -92,16 +120,6 @@ class RivasRuido
         $this->created = $created;
 
         return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
     }
 
     /**
@@ -262,6 +280,54 @@ class RivasRuido
     public function setTreasurer($treasurer)
     {
         $this->treasurer = $treasurer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSecretary()
+    {
+        return $this->secretary;
+    }
+
+    /**
+     * @param mixed $secretary
+     */
+    public function setSecretary($secretary)
+    {
+        $this->secretary = $secretary;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAbout()
+    {
+        return $this->about;
+    }
+
+    /**
+     * @param string $about
+     */
+    public function setAbout($about)
+    {
+        $this->about = $about;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSanctionPolicy()
+    {
+        return $this->sanctionPolicy;
+    }
+
+    /**
+     * @param string $sanctionPolicy
+     */
+    public function setSanctionPolicy($sanctionPolicy)
+    {
+        $this->sanctionPolicy = $sanctionPolicy;
     }
 }
 

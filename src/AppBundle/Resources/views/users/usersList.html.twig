@@ -1,0 +1,36 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block title %}RIVAS RUIDO APP{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <h1>RIVAS RUIDO APP - NUEVO USUARIO</h1>
+        <div id="container">
+            <a href="{{ url('users_add') }}">Nuevo</a>
+            <table>
+                <tr>
+                    <td>Nombre</td>
+                    <td>Apellidos</td>
+                    <td>Grupos</td>
+                    <td>Email</td>
+                    <td>Teléfono</td>
+                    <td>Estado</td>
+                    <td>Editar</td>
+                    <td>Borrar</td>
+                </tr>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.surname1 }} {{ user.surname2 }}</td>
+                    <td>{% for group in user.groups %}{{ group.name }}{% if not loop.last %} | {% endif %}{% endfor %}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.statusName }}</td>
+                    <td><a href="{{ url('users_edit', {'id' : user.id}) }}">Editar</a></td>
+                    <td><a onclick="return confirm('¿Seguro que deseas eliminar el usuario?')" href="{{ url('users_delete', {'id' : user.id}) }}">Borrar</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

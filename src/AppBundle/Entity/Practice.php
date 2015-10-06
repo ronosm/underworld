@@ -13,24 +13,35 @@ class Practice
 {
     /**
      * @var integer
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @var \DateTime
+     * @ORM\Column(type="date")
      */
     private $created;
 
     /**
      * @var \DateTime
+     * @ORM\Column(type="date")
      */
     private $timeStart;
 
     /**
      * @var \DateTime
+     * @ORM\Column(type="date")
      */
     private $timeEnd;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Hour")
+     * @ORM\JoinColumn(name="hour_id", referencedColumnName="id")
+     **/
+    private $hour;
 
     /**
      * Get id
@@ -96,6 +107,22 @@ class Practice
     public function setTimeEnd($timeEnd)
     {
         $this->timeEnd = $timeEnd;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHour()
+    {
+        return $this->hour;
+    }
+
+    /**
+     * @param mixed $hour
+     */
+    public function setHour($hour)
+    {
+        $this->hour = $hour;
     }
 }
 

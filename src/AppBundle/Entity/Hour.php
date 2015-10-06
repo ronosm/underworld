@@ -13,36 +13,51 @@ class Hour
 {
     /**
      * @var integer
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @var integer
+     * @ORM\Column(type="integer")
      */
     private $hourStart;
 
     /**
      * @var integer
+     * @ORM\Column(type="integer")
      */
     private $hourEnd;
 
     /**
      * @var integer
+     * @ORM\Column(type="integer")
+     */
+    private $day;
+
+    /**
+     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $room;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private $equipment;
 
     /**
      * @var boolean
+     * @ORM\Column(type="boolean")
      */
     private $status;
 
     /**
      * @var \DateTime
+     * @ORM\Column(type="date")
      */
     private $created;
 
@@ -159,6 +174,22 @@ class Hour
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDay()
+    {
+        return $this->day;
+    }
+
+    /**
+     * @param int $day
+     */
+    public function setDay($day)
+    {
+        $this->day = $day;
     }
 }
 
