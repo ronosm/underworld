@@ -1,0 +1,32 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block title %}RIVAS RUIDO APP{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <h1>RIVAS RUIDO APP - HORAS</h1>
+        <div id="container">
+            <a href="{{ url('hours_add') }}">Nueva</a>
+            <table>
+                <tr>
+                    <td>Sala</td>
+                    <td>Día</td>
+                    <td>Hora de inicio</td>
+                    <td>Estado</td>
+                    <td>Editar</td>
+                    <td>Borrar</td>
+                </tr>
+                {% for hour in hours %}
+                <tr>
+                    <td>{{ hour.roomName }}</td>
+                    <td>{{ hour.dayName }}</td>
+                    <td>{{ hour.hourName }}</td>
+                    <td>{{ hour.statusName }}</td>
+                    <td><a href="{{ url('hours_edit', {'id' : hour.id}) }}">Editar</a></td>
+                    <td><a onclick="return confirm('¿Seguro que deseas eliminar la hora?')" href="{{ url('hours_delete', {'id' : hour.id}) }}">Borrar</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

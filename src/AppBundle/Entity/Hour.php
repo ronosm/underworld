@@ -44,12 +44,6 @@ class Hour
     private $room;
 
     /**
-     * @var string
-     * @ORM\Column(type="string")
-     */
-    private $equipment;
-
-    /**
      * @var boolean
      * @ORM\Column(type="boolean")
      */
@@ -145,22 +139,6 @@ class Hour
     }
 
     /**
-     * @return string
-     */
-    public function getEquipment()
-    {
-        return $this->equipment;
-    }
-
-    /**
-     * @param string $equipment
-     */
-    public function setEquipment($equipment)
-    {
-        $this->equipment = $equipment;
-    }
-
-    /**
      * @return boolean
      */
     public function isStatus()
@@ -190,6 +168,46 @@ class Hour
     public function setDay($day)
     {
         $this->day = $day;
+    }
+
+    public function getName()
+    {
+        $days = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+
+        return 'Sala '.$this->getRoom().'-'.$days[$this->getDay()].'-'.$this->getHourStart().':00';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDayName()
+    {
+        $days = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+        return $days[$this->getDay()];
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoomName()
+    {
+        return 'Sala '.$this->getRoom();
+    }
+
+    /**
+     * @return string
+     */
+    public function getHourName()
+    {
+        return $this->getHourStart().':00';
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusName()
+    {
+        return $this->isStatus()?'Inactiva':'Activa';
     }
 }
 

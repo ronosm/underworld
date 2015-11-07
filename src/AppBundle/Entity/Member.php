@@ -94,8 +94,7 @@ class Member implements UserInterface, \Serializable
     private $status;
 
     /**
-     * @ORM\ManyToMany(targetEntity="MemberGroup", inversedBy="members")
-     * @ORM\JoinTable(name="members_groups")
+     * @ORM\ManyToMany(targetEntity="MemberGroup", mappedBy="members", cascade="persist")
      **/
     private $groups;
 
@@ -437,6 +436,19 @@ class Member implements UserInterface, \Serializable
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompleteName()
+    {
+        return $this->name.' '.$this->surname1.' '.$this->surname2;
+    }
+
+    public function getNextPractices()
+    {
+
     }
 }
 

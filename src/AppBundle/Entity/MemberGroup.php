@@ -39,7 +39,9 @@ class MemberGroup
     private $level;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Member", mappedBy="groups")
+     * @ORM\ManyToMany(targetEntity="Member", inversedBy="groups", cascade="persist")
+     * @ORM\OrderBy({"name" = "ASC", "surname1" = "ASC", "surname2" = "ASC"})
+     * @ORM\JoinTable(name="members_groups")
      **/
     private $members;
 
@@ -226,6 +228,10 @@ class MemberGroup
     public function setHour2($hour2)
     {
         $this->hour2 = $hour2;
+    }
+
+    public function getNextPractices($amount)
+    {
     }
 }
 
